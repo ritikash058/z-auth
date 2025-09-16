@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "target": "ES2020",                    // modern JS output
+      "module": "NodeNext",                  // or "ESNext" if you only want pure ESM
+      "moduleResolution": "NodeNext",        // ensures imports resolve properly
+      "declaration": true,                   // generates .d.ts files
+      "outDir": "dist",                      // compiled files go here
+      "rootDir": "./",                      // your source code folder
+      "esModuleInterop": true,               // allows `import axios from "axios"`
+      "resolveJsonModule": true,
+      "strict": true,
+      "skipLibCheck": true
+    },
+    "include": ["lib"],                      // your TS source
+    "exclude": ["node_modules", "dist", "tests"]
+  }
+  

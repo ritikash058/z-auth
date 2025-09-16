@@ -1,0 +1,66 @@
+{
+  "name": "@zls4/z-auth",
+  "version": "1.1.9",
+  "description": "ZAuth is a authentication service for ZLS.NP",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "default": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/index.d.ts"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsup index.ts --dts --format cjs,esm --out-dir dist",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/zls.np/z-auth.git"
+  },
+  "homepage": "https://gitlab.com/zls.np/z-auth",
+  "keywords": [
+    "zls",
+    "zls.np",
+    "zauth",
+    "authentication",
+    "authorization"
+  ],
+  "author": "Zero Logic Space",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.18.1",
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.1.7",
+    "prettier": "^3.3.3",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.10",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2",
+    "winston": "^3.3.3"
+  },
+  "dependencies": {
+    "@types/axios": "^0.14.4",
+    "axios": "^1.11.0",
+    "express": "^4.21.1",
+    "express-validator": "^7.2.1"
+  }
+}
