@@ -89,4 +89,14 @@ verifyEmail(token: string)
 
 ```
 
+### Permissions Service
+
+```javascript
+createPermissionByRoleId(module:string,access:string,description?:string)
+getAllPermissions()
+getPermissionById (id: number)
+updatePermissionById (id:number, module:string,access:string,description?:string)
+deletePermissionById (id : number)
+setPermissionByRoleId (roleId: number, permissionId: number)
+```
 

@@ -13,6 +13,8 @@ export const createUserValidator = [
   body("password")
     .matches(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/)
     .withMessage("Password must contain at least one symbol"),
+  body("roleId").notEmpty().withMessage("Role ID is required"),
+  body("roleId").isInt().withMessage("Role ID must be an integer"),
 ];
 
 export const resetPasswordValidator = [

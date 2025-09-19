@@ -1,6 +1,6 @@
 // services/users/service.user.ts
-import { ZAuthClient } from "../../lib/connection";
-import { validationResult } from "express-validator";
+import { ZAuthClient, validateRequest } from "../../lib/connection";
+
 import {
   createUserValidator,
   resetPasswordValidator,
@@ -15,28 +15,11 @@ export class UserService {
     this.client = client;
   }
 
-  private validateRequest(validators: any[], data: any) {
-    return new Promise((resolve, reject) => {
-      const req = { body: data };
-      const runValidation = async () => {
-        for (const validator of validators.flat()) {
-          await validator(req, {}, () => {});
-        }
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-          const errorMessages = errors.array().map((error) => error.msg);
-          return reject(errorMessages);
-        }
-        resolve(true);
-      };
-      runValidation();
-    });
-  }
-
-  async createUser(email: string, password: string) {
+  async createUser(email: string, password: string, roleId: number) {
     try {
-      await this.validateRequest(createUserValidator, { email, password });
-      const response = await this.client.post("/users", { email, password });
+      await validateRequest(createUserValidator, { email, password });
+      const data = { email, password, roleId };
+      const response = await this.client.post("/users", data);
       return response.data;
     } catch (error: any) {
       if (Array.isArray(error)) {
@@ -69,7 +52,7 @@ export class UserService {
 
   async forgotPassword(email: string) {
     try {
-      await this.validateRequest(forgotPasswordValidator, { email });
+      await validateRequest(forgotPasswordValidator, { email });
       const response = await this.client.post("/users/forgot-password", {
         email,
       });
@@ -94,7 +77,7 @@ export class UserService {
     confirmPassword: string
   ) {
     try {
-      await this.validateRequest(resetPasswordValidator, {
+      await validateRequest(resetPasswordValidator, {
         password,
         confirmPassword,
       });
@@ -121,7 +104,7 @@ export class UserService {
     confirmPassword: string
   ) {
     try {
-      await this.validateRequest(changePasswordValidator, {
+      await validateRequest(changePasswordValidator, {
         currentPassword,
         newPassword,
         confirmPassword,

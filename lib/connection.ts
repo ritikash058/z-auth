@@ -1,7 +1,7 @@
 // lib/connection.ts
 import { AxiosInstance } from "axios";
 import { api } from "./config";
-
+import { validationResult } from "express-validator";
 export class ZAuthClient {
     private client: AxiosInstance;
     private baseURL: string;
@@ -49,4 +49,23 @@ export function createConnection(config: {
     apiSecretKey: string;
 }) {
     return new ZAuthClient(config);
+}
+
+export function validateRequest(validators: any[], data: any) {
+    return new Promise((resolve, reject) => {
+        const req = { body: data };
+        const runValidation = async () => {
+            for (const validator of validators.flat()) {
+            await validator(req, {}, () => {});
+            }
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+            const errorMessages = errors.array().map((error) => error.msg);
+            reject(errorMessages);
+            } else {
+            resolve(true);
+            }
+        };
+        runValidation();
+    });
 }
