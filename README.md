@@ -13,7 +13,7 @@ npm install @zls4/z-auth
 ### User Service
 
 ```javascript
-import { createConnection, UserService } from "@zls4/z-auth";
+import { createConnection, UserService, RoleService, PermissionService } from "@zls4/z-auth";
 
 const zAuth = createConnection({
   baseURL: "https://z-auth-stage.zerologicspace.com/api",
@@ -61,7 +61,7 @@ async function example2() {
     const one = "stickdemon2043";
     const two = "Asdf1234!";
     // const users = await userService.getUserById("paradise-1704caa");
-    const users = await userService.createUser(one, two);
+    const users = await userService.createUser(one, two, [1,2,3]);
     console.log(users);
 }
 
@@ -77,7 +77,7 @@ Output:
 ### User Service
 
 ```javascript
-createUser(email:string, password:string)
+createUser(email:string, password:string, roleId: any) (roleId: array of numbers)
 login(email:string, password:string)
 forgotPassword(email:string)
 getUserById(id: string)
@@ -86,7 +86,17 @@ changePassword(id: string, currentPassword:string, newPassword:string, confirmPa
 deleteUserById(id: string)
 logout(id: string)
 verifyEmail(token: string)
+updateUserRole(userId: number, roleId: any) (roleId: array of numbers)
 
+```
+### Role Service
+
+```javascript
+createRole(name:string, description?:string)
+getAllRoles()
+getRoleById (id: number)
+updateRoleById (id:number, name:string, description?:string)
+deleteRoleById (id : number)
 ```
 
 ### Permissions Service

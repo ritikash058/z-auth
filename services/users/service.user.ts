@@ -17,7 +17,7 @@ export class UserService {
 
   async createUser(email: string, password: string, roleId: number) {
     try {
-      await validateRequest(createUserValidator, { email, password });
+      await validateRequest(createUserValidator, { email, password, roleId });
       const data = { email, password, roleId };
       const response = await this.client.post("/users", data);
       return response.data;
@@ -171,6 +171,18 @@ export class UserService {
   async verifyEmail(token: string) {
     try {
       const response = await this.client.get(`/user/verify-email/${token}`);
+      return response.data;
+    } catch (error: any) {
+      return {
+        error: error.response?.data || error.message,
+        status: error.response?.status || 500,
+      };
+    }
+  }
+
+  async updateUserRole (userId: number, roleId: any) {
+    try {
+      const response = await this.client.patch(`/users/update-role/${userId}`, {roleId});
       return response.data;
     } catch (error: any) {
       return {
