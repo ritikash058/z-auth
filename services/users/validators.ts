@@ -14,7 +14,7 @@ export const createUserValidator = [
     .matches(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/)
     .withMessage("Password must contain at least one symbol"),
   body("roleId").notEmpty().withMessage("Role ID is required"),
-  body("roleId").isArray({ min: 1 }).withMessage("Role ID must be an array"),
+  body("roleId").isArray({ min: 1 }).withMessage("Atleast one role ID is required"),
   body("roleId")
     .custom((value) => {
       if (!Array.isArray(value)) return false;
@@ -76,7 +76,7 @@ export const forgotPasswordValidator = [
 
 export const updateUserRoleValidator = [
     body("roleId").notEmpty().withMessage("Role ID is required"),
-    body("roleId").isArray({ min: 1 }).withMessage("Role ID must be an array"),
+    body("roleId").isArray({ min: 1 }).withMessage("Atleast one role ID is required"),
     body("roleId")
       .custom((value) => {
         if (!Array.isArray(value)) return false;

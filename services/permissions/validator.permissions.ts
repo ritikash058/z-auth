@@ -46,7 +46,7 @@ export const setPermissionValidator = [
   body("permissionId")
     .notEmpty()
     .withMessage("Permission ID is required"),
-  body("permissionId").isArray({ min: 1 }).withMessage("Permission ID must be an array"),
+  body("permissionId").isArray({ min: 1 }).withMessage("Atleast one permission ID is required"),
   body("permissionId")
     .custom((value) => {
       if (!Array.isArray(value)) return false;
