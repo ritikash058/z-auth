@@ -8,7 +8,7 @@ export class PermissionsService {
         this.client = client
     }
 
-    async createPermissionByRoleId(module:string,access:string,description?:string){
+    async createPermission(module:string,access:string,description?:string){
         try {
             await validateRequest(createPermissionValidator,{module,access,description})
             const response = await this.client.post("/permissions",{module,access,description})
@@ -83,7 +83,7 @@ export class PermissionsService {
         }
     }
 
-    async setPermissionByRoleId (roleId: number, permissionId: number) {
+    async setPermissionByRoleId (roleId: number, permissionId: number[]) {
         try {
             await validateRequest(setPermissionValidator,{roleId,permissionId})
             const response = await this.client.patch(`/permissions/set-permission/${roleId}`,{permissionId})

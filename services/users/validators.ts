@@ -14,7 +14,13 @@ export const createUserValidator = [
     .matches(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/)
     .withMessage("Password must contain at least one symbol"),
   body("roleId").notEmpty().withMessage("Role ID is required"),
-  body("roleId").isInt().withMessage("Role ID must be an integer"),
+  body("roleId").isArray({ min: 1 }).withMessage("Role ID must be an array"),
+  body("roleId")
+    .custom((value) => {
+      if (!Array.isArray(value)) return false;
+      return value.every((item) => typeof item === "number" && !isNaN(item));
+    })
+    .withMessage("Each role ID must be a number"),
 ];
 
 export const resetPasswordValidator = [
@@ -66,4 +72,15 @@ export const changePasswordValidator = [
 export const forgotPasswordValidator = [
   body("email").notEmpty().withMessage("Email is required"),
   body("email").isEmail().withMessage("Must be valid email address."),
+];
+
+export const updateUserRoleValidator = [
+    body("roleId").notEmpty().withMessage("Role ID is required"),
+    body("roleId").isArray({ min: 1 }).withMessage("Role ID must be an array"),
+    body("roleId")
+      .custom((value) => {
+        if (!Array.isArray(value)) return false;
+        return value.every((item) => typeof item === "number" && !isNaN(item));
+      })
+      .withMessage("Each role ID must be a number"),
 ];

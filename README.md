@@ -77,7 +77,7 @@ Output:
 ### User Service
 
 ```javascript
-createUser(email:string, password:string, roleId: any) (roleId: array of numbers)
+createUser(email:string, password:string, roleId: number[]) (roleId: array of numbers)
 login(email:string, password:string)
 forgotPassword(email:string)
 getUserById(id: string)
@@ -86,7 +86,7 @@ changePassword(id: string, currentPassword:string, newPassword:string, confirmPa
 deleteUserById(id: string)
 logout(id: string)
 verifyEmail(token: string)
-updateUserRole(userId: number, roleId: any) (roleId: array of numbers)
+updateUserRole(userId: string, roleId: number[]) (roleId: array of numbers)
 
 ```
 ### Role Service
@@ -102,11 +102,12 @@ deleteRoleById (id : number)
 ### Permissions Service
 
 ```javascript
-createPermissionByRoleId(module:string,access:string,description?:string)
+createPermission(module:string,access:string,description?:string)
 getAllPermissions()
 getPermissionById (id: number)
 updatePermissionById (id:number, module:string,access:string,description?:string)
 deletePermissionById (id : number)
-setPermissionByRoleId (roleId: number, permissionId: number)
+setPermissionByRoleId (roleId: number, permissionId: number[])
+setAllPermissions(roleId:number)
 ```
 

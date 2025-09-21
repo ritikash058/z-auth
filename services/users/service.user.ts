@@ -6,6 +6,7 @@ import {
   resetPasswordValidator,
   changePasswordValidator,
   forgotPasswordValidator,
+  updateUserRoleValidator,
 } from "./validators";
 
 export class UserService {
@@ -15,7 +16,7 @@ export class UserService {
     this.client = client;
   }
 
-  async createUser(email: string, password: string, roleId: number) {
+  async createUser(email: string, password: string, roleId: number[]) {
     try {
       await validateRequest(createUserValidator, { email, password, roleId });
       const data = { email, password, roleId };
@@ -180,11 +181,18 @@ export class UserService {
     }
   }
 
-  async updateUserRole (userId: number, roleId: any) {
+  async updateUserRole (userId: string, roleId: number[]) {
     try {
+      await validateRequest(updateUserRoleValidator,{roleId})
       const response = await this.client.patch(`/users/update-role/${userId}`, {roleId});
       return response.data;
     } catch (error: any) {
+      if (Array.isArray(error)) {
+        return {
+          error: error.join(", "),
+          status: 400,
+        };
+      }
       return {
         error: error.response?.data || error.message,
         status: error.response?.status || 500,
