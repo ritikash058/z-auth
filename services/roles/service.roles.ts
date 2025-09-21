@@ -53,7 +53,7 @@ export class RoleService {
     }
   }
 
-  async updateRoleNameById(id: number, name: string, description: string) {
+  async updateRoleById(id: number, name: string, description: string) {
     try {
       await validateRequest(updateRoleValidator, { name, description });
       const data = { name, description };
@@ -76,6 +76,18 @@ export class RoleService {
   async deleteRoleById(id: number) {
     try {
       const response = await this.client.delete(`/roles/${id}`);
+      return response.data;
+    } catch (error: any) {
+      return {
+        error: error.response?.data || error.message,
+        status: error.response?.status || 500,
+      };
+    }
+  }
+
+  async getPermissionsByRoleId(id: number) {
+    try {
+      const response = await this.client.get(`/roles/permissions/${id}`);
       return response.data;
     } catch (error: any) {
       return {

@@ -11,7 +11,7 @@ export const createRoleValidator = [
     body("name")
       .isLength({ min: 3, max: 16 })
       .withMessage("Name must be between 3 and 16 characters"),
-    body("description").optional().isString(),
+    body("description").optional().isString().withMessage("Description must be a string"),
 ];
 export const updateRoleValidator = [
     body("name")
@@ -23,5 +23,5 @@ export const updateRoleValidator = [
       .customSanitizer((value) => {
         return value.toLowerCase().replace(/\s+/g, "-");
       }),
-    body("description").optional().isString(),
+    body("description").optional().isString().withMessage("Description must be a string"),
 ];

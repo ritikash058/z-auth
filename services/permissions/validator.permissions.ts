@@ -20,7 +20,7 @@ export const createPermissionValidator = [
   body("access")
     .isIn(["create", "read", "update", "delete"])
     .withMessage("Access is must be create, read, update, delete"),
-  body("description").optional().isString(),
+  body("description").optional().isString().withMessage("Description must be a string"),
 ];
 export const updatePermissionValidator = [
   body("module")
@@ -40,7 +40,7 @@ export const updatePermissionValidator = [
       return value.toLowerCase().replace(/\s+/g, "-");
     })
     .isIn(["create", "read", "update", "delete"]),
-  body("description").optional().isString(),
+  body("description").optional().isString().withMessage("Description must be a string"),
 ];
 export const setPermissionValidator = [
   body("permissionId")
