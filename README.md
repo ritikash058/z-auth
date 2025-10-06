@@ -98,6 +98,8 @@ getRoleById (id: number)
 updateRoleById (id:number, name:string, description?:string)
 deleteRoleById (id : number)
 getPermissionsByRoleId(id: number)
+getAccessToken()
+getRefreshToken()
 ```
 
 ### Permissions Service

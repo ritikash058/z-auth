@@ -159,7 +159,7 @@ export class UserService {
 
   async logout(id: string) {
     try {
-      const response = await this.client.get(`/user/logout/${id}`);
+      const response = await this.client.get(`/users/logout/${id}`);
       return response.data;
     } catch (error: any) {
       return {
@@ -171,7 +171,7 @@ export class UserService {
 
   async verifyEmail(token: string) {
     try {
-      const response = await this.client.get(`/user/verify-email/${token}`);
+      const response = await this.client.get(`/users/verify-email/${token}`);
       return response.data;
     } catch (error: any) {
       return {
@@ -193,6 +193,30 @@ export class UserService {
           status: 400,
         };
       }
+      return {
+        error: error.response?.data || error.message,
+        status: error.response?.status || 500,
+      };
+    }
+  }
+
+  async getAccessToken() {
+    try {
+      const response = await this.client.get("/users/jwt-secert");
+      return response.data;
+    } catch (error: any) {
+      return {
+        error: error.response?.data || error.message,
+        status: error.response?.status || 500,
+      };
+    }
+  }
+
+  async getRefreshToken() {
+    try {
+      const response = await this.client.get("/users/refresh-secert");
+      return response.data;
+    } catch (error: any) {
       return {
         error: error.response?.data || error.message,
         status: error.response?.status || 500,
