@@ -1,17 +1,8 @@
 export interface I_Users {
-  id: string;
-  email: string;
+  email?: string;
   contactNumber?: string;
   password: string;
-  isBlocked: boolean;
   roleId: number[];
-  isEmailVerified: boolean;
-  emailVerificationToken?: string | null;
-  emailVerificationTokenExpiresAt?: string | null;
-  passwordResetToken?: string | null;
-  passwordResetTokenExpiresAt?: string | null;
-  tenantId?: number | null;
-  refreshToken?: string | null;
 }
 
 export interface I_ResetPassword {

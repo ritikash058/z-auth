@@ -14,6 +14,7 @@ npm install @zls4/z-auth
 
 ```javascript
 import { createConnection, UserService, RoleService, PermissionService } from "@zls4/z-auth";
+import type { I_Users } from "@zls4/z-auth";
 
 const zAuth = createConnection({
   baseURL: "https://z-auth-stage.zerologicspace.com/api",
@@ -58,10 +59,12 @@ const zAuth = createConnection({
 const userService = new UserService(zAuth);
 
 async function example2() {
-    const one = "stickdemon2043";
-    const two = "Asdf1234!";
-    // const users = await userService.getUserById("paradise-1704caa");
-    const users = await userService.createUser(one, two, [1,2,3]);
+   const data: I_Users = {
+        email: "user@example.com",
+        password: "Asdf1234!",
+        roleId: [2,5]
+    }
+    const users = await userService.createUser(data);
     console.log(users);
 }
 
