@@ -1,6 +1,6 @@
 // services/users/service.user.ts
 import { ZAuthClient, validateRequest } from "../../lib/connection";
-
+import { I_Users , I_ChangePassword, I_ForgotPasswordRequest, I_LoginRequest, I_ResetPassword, I_UpdateUserByIdRequest } from "./interface.user";
 import {
   createUserValidator,
   resetPasswordValidator,
@@ -16,10 +16,9 @@ export class UserService {
     this.client = client;
   }
 
-  async createUser(email: string, password: string, roleId: number[]) {
+  async createUser(data: I_Users) {
     try {
-      await validateRequest(createUserValidator, { email, password, roleId });
-      const data = { email, password, roleId };
+      await validateRequest(createUserValidator, data as I_Users);
       const response = await this.client.post("/users", data);
       return response.data;
     } catch (error: any) {
@@ -36,12 +35,9 @@ export class UserService {
     }
   }
 
-  async login(email: string, password: string) {
+  async login(data: I_LoginRequest) {
     try {
-      const response = await this.client.post("/users/login", {
-        email,
-        password,
-      });
+      const response = await this.client.post("/users/login", data);
       return response.data;
     } catch (error: any) {
       return {
@@ -51,12 +47,10 @@ export class UserService {
     }
   }
 
-  async forgotPassword(email: string) {
+  async forgotPassword(data: I_ForgotPasswordRequest) {
     try {
-      await validateRequest(forgotPasswordValidator, { email });
-      const response = await this.client.post("/users/forgot-password", {
-        email,
-      });
+      await validateRequest(forgotPasswordValidator, data);
+      const response = await this.client.post("/users/forgot-password", data);
       return response.data;
     } catch (error: any) {
       if (Array.isArray(error)) {
@@ -72,17 +66,10 @@ export class UserService {
     }
   }
 
-  async resetPassword(
-    token: string,
-    password: string,
-    confirmPassword: string
-  ) {
+  async resetPassword(token: string, data: I_ResetPassword) {
     try {
-      await validateRequest(resetPasswordValidator, {
-        password,
-        confirmPassword,
-      });
-      const response = await this.client.patch(`/users/reset-password/${token}`, {password, confirmPassword});
+      await validateRequest(resetPasswordValidator, data);
+      const response = await this.client.patch(`/users/reset-password/${token}`, data);
       return response.data;
     } catch (error: any) {
       if (Array.isArray(error)) {
@@ -98,25 +85,12 @@ export class UserService {
     }
   }
 
-  async changePassword(
-    id: string,
-    currentPassword: string,
-    newPassword: string,
-    confirmPassword: string
-  ) {
+  async changePassword(id: string, data: I_ChangePassword) {
     try {
-      await validateRequest(changePasswordValidator, {
-        currentPassword,
-        newPassword,
-        confirmPassword,
-      });
+      await validateRequest(changePasswordValidator, data);
       const response = await this.client.patch(
         `/users/change-password/${id}`,
-        {
-          currentPassword,
-          newPassword,
-          confirmPassword,
-        }
+        data
       );
       return response.data;
     } catch (error: any) {
@@ -181,10 +155,10 @@ export class UserService {
     }
   }
 
-  async updateUserRole (userId: string, roleId: number[]) {
+  async updateUserRole (userId: string, data: I_UpdateUserByIdRequest) {
     try {
-      await validateRequest(updateUserRoleValidator,{roleId})
-      const response = await this.client.patch(`/users/update-role/${userId}`, {roleId});
+      await validateRequest(updateUserRoleValidator,data)
+      const response = await this.client.patch(`/users/update-role/${userId}`, data);
       return response.data;
     } catch (error: any) {
       if (Array.isArray(error)) {

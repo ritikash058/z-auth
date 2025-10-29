@@ -77,16 +77,16 @@ Output:
 ### User Service
 
 ```javascript
-createUser(email:string, password:string, roleId: number[]) (roleId: array of numbers)
-login(email:string, password:string)
-forgotPassword(email:string)
+createUser(data: I_Users)
+login(data: I_LoginRequest)
+forgotPassword(data: I_ForgotPasswordRequest)
 getUserById(id: string)
-resetPassword(token: string, password:string, confirmPassword:string)
-changePassword(id: string, currentPassword:string, newPassword:string, confirmPassword:string)
+resetPassword(token: string, data: I_ResetPassword)
+changePassword(id: string, data: I_ChangePassword)
 deleteUserById(id: string)
 logout(id: string)
 verifyEmail(token: string)
-updateUserRole(userId: string, roleId: number[]) (roleId: array of numbers)
+updateUserRole(userId: string, data: I_UpdateUserByIdRequest)
 
 ```
 ### Role Service

@@ -1,4 +1,5 @@
 export * from "./services/users"
 export * from "./services/roles"
 export * from "./services/permissions"
+export {I_Users, I_ResetPassword, I_VerficationToken, I_ResetPasswordToken, I_LoginRequest, I_LoginResponse, I_Payload, I_ChangePassword, I_CreatedUser, I_ForgotPasswordRequest, I_ForgotPasswordResponse, I_UpdateUserByIdRequest} from "./services/users/interface.user"
 export { createConnection } from "./lib/connection"
